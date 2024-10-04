@@ -1,0 +1,14 @@
+*
+
+!.gitignore
+
+!Makefile
+
+!src/
+!include/
+
+
+*.o
+*.out
+*.exe
+text_adventure
