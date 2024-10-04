@@ -12,28 +12,37 @@ class Door;
 class Lever : public Interactable {
     bool isPulled; // Tracks whether the lever has been pulled - once pulled,
                    // it's done.
+    Door* connectedDoor; // The door that this lever controls.
 
   public:
-    // Constructor - we start with the lever unpulled. Everything is as it is.
-    Lever() : isPulled(false) {}
+    // Constructor - this lever starts unpulled, but now it also has a door to
+    // affect.
+    Lever(Door* door) : isPulled(false), connectedDoor(door) {}
 
-    // The act of pulling the lever, but without context. In life, some actions
-    // are empty unless they have meaning, like pulling a lever that isn't
-    // connected to anything yet.
+    // The act of pulling the lever. Now it tries to interact with its door.
     void interact() override {
-        std::cout << "You pull the lever. Nothing happens, as this isn't the "
-                     "specific interact."
+        std::cout << "You pull the lever. You hear a click in the distance..."
                   << std::endl;
+
+        // Check if the door exists before trying to interact with it.
+        if (connectedDoor == nullptr) {
+            std::cout << "There is no door connected to this lever."
+                      << std::endl;
+            return;
+        }
+
+        // The lever unlocks the door, just as a key unlocks possibilities.
+        if (connectedDoor->isLockedState()) {
+            connectedDoor->unlock();
+            std::cout
+                << "The door has been unlocked. A way forward is now open."
+                << std::endl;
+        } else {
+            std::cout << "The lever seems to have no further effect. The door "
+                         "is already unlocked."
+                      << std::endl;
+        }
     }
-
-    // The act of pulling the lever - once pulled, it doesn't change back.
-    // A reminder that actions often have irreversible consequences, even in
-    // small things.
-    void interact(Door* door);
-
-    // Just checking if the lever has been pulled, like looking back at a past
-    // decision.
-    bool hasBeenPulled() const { return isPulled; }
 };
 
 #endif // LEVER_H

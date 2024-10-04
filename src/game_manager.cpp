@@ -40,7 +40,7 @@ void GameManager::initGame() {
     room2->addInteractable(door);
 
     // Place a lever in room 1 and pass the door that it should unlock
-    Lever* lever = new Lever();
+    Lever* lever = new Lever(door);
     room1->addInteractable(lever);
 
     // Assign the rooms to the game manager's room map.
