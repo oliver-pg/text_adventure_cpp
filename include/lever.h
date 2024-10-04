@@ -17,6 +17,15 @@ class Lever : public Interactable {
     // Constructor - we start with the lever unpulled. Everything is as it is.
     Lever() : isPulled(false) {}
 
+    // The act of pulling the lever, but without context. In life, some actions
+    // are empty unless they have meaning, like pulling a lever that isn't
+    // connected to anything yet.
+    void interact() override {
+        std::cout << "You pull the lever. Nothing happens, as this isn't the "
+                     "specific interact."
+                  << std::endl;
+    }
+
     // The act of pulling the lever - once pulled, it doesn't change back.
     // A reminder that actions often have irreversible consequences, even in
     // small things.
