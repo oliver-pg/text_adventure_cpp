@@ -1,7 +1,9 @@
 #ifndef ROOM_H
 #define ROOM_H
 
+#include "door.h"
 #include "interactable.h"
+#include "lever.h"
 #include <iostream>
 #include <map>
 #include <string>
@@ -65,5 +67,6 @@ class Room {
         std::cout << "There's nothing like that here to interact with."
                   << std::endl;
     };
+};
 
 #endif // ROOM_H
