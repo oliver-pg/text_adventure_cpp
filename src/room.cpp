@@ -1,28 +1,26 @@
-// Room implementation: Defines what the player sees and how they navigate
-// Each room is like a chapter of a story, interconnected with the others
-
 #include "../include/room.h"
 #include <iostream>
 
-// Constructor: Initializes the room with a description
+// The room is created with a description. Each room, like each moment in life,
+// starts with a story.
 Room::Room(std::string desc) : description(desc) {}
 
-// Adds an exit to another room, creating a path in a given direction
+// Adding an exit gives you a path forward - a chance to move from this room to
+// the next.
 void Room::addExit(const std::string& direction, int roomId) {
     exits[direction] = roomId;
 }
 
-// Retrieves the room ID for the next room when the player takes a direction
+// Retrieves the room ID in a given direction. If there's no exit, it's like
+// finding no clear way out.
 int Room::getExit(const std::string& direction) const {
     auto it = exits.find(direction);
     if (it != exits.end()) {
-        return it->second; // Returning the next step on the journey
+        return it->second;
     }
-    return -1; // If no exit exists in that direction, a moment of pause
+    return -1; // No exit in this direction.
 }
 
-// Provides the player with a description of the room
-void Room::describe() const {
-    std::cout << description << std::endl; // Sharing the moment's experience,
-                                           // the atmosphere of the room
-}
+// Describes the room to the player, helping them understand where they are,
+// right now.
+void Room::describe() const { std::cout << description << std::endl; }
