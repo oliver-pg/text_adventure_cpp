@@ -4,7 +4,6 @@
 
 // The lever class represents a decision point in life.
 // You pull it, and things change—sometimes in ways you don't expect.
-Lever::Lever() {}
 
 // When the player interacts with the lever, the state of the world shifts.
 // Perhaps something has been unlocked, a path forward revealed.
