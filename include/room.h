@@ -9,10 +9,10 @@
 
 // Room class manages the description, exits, and interactables in each space
 class Room {
-    std::string description; // A short description to paint a picture of where
-                             // the player is
+    std::string description{}; // A short description to paint a picture of
+                               // where the player is
     std::map<std::string, int>
-        exits; // Directions mapped to the next rooms, paths of the journey
+        exits{}; // Directions mapped to the next rooms, paths of the journey
 
   public:
     Room(std::string desc); // Constructor to set the initial feel of the room

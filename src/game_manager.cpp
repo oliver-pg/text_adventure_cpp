@@ -1,4 +1,3 @@
-
 // GameManager implementation: This is where we breathe life into the game
 // Each function here guides the player through their journey
 

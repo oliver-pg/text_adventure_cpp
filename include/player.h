@@ -9,10 +9,10 @@
 
 // Player class is responsible for managing the player's state
 class Player {
-    std::string name;  // The name of the player, unique to each journey
-    int currentRoomId; // Tracks the room the player is currently in
+    std::string name{};  // The name of the player, unique to each journey
+    int currentRoomId{}; // Tracks the room the player is currently in
     std::vector<std::string>
-        inventory; // A collection of items the player gathers along the way
+        inventory{}; // A collection of items the player gathers along the way
 
   public:
     Player(std::string playerName); // Constructor to name our adventurer and
