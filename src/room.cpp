@@ -28,28 +28,28 @@ void Room::describe() const { std::cout << description << std::endl; }
 // Allows the player to interact with everything in the room.
 // Engage with the world and see what actions come from it.
 void Room::interactWithObject(const std::string& objectName) const {
+    Door* door = nullptr;
+    // Find the door in the room
+    for (const auto& obj : interactables) {
+        if (Door* d = dynamic_cast<Door*>(obj)) {
+            door = d;
+            break;
+        }
+    }
+
     // Each object in the room waits for attention, an invitation to act.
     for (const auto& obj : interactables) {
         // Checking if it's the lever - the player might be ready to engage.
         if (Lever* lever = dynamic_cast<Lever*>(obj)) {
             if (objectName == "lever") {
-                // Pass the door object to the lever's interact function
-                Door* door = nullptr;
-                // Checking for a door in the room
-                for (const auto& obj : interactables) {
-                    if (Door* d = dynamic_cast<Door*>(obj)) {
-                        door = d;
-                        break;
-                    }
-                }
-                lever->interact(door); // Interacting with the lever
-                return; // Once the lever is pulled, the interaction is
-                        // complete.
+                lever->interact(
+                    door); // Pass the door to the lever's interact function
+                return;
             }
             // Checking for a door - maybe it's time to open the way forward.
         } else if (Door* door = dynamic_cast<Door*>(obj)) {
             if (objectName == "door") {
-                door->interact(); // Interacting with the door
+                door->interact();
                 return;
             }
         }

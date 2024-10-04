@@ -35,13 +35,13 @@ void GameManager::initGame() {
     room1->addExit("north", 1);
     room2->addExit("south", 0);
 
-    // Place a lever in room 1 - something to interact with.
-    Lever* lever = new Lever();
-    room1->addInteractable(lever);
-
-    // Place a door in room 2 - it's locked, but the lever might help...
+    // Place a door in room 2
     Door* door = new Door();
     room2->addInteractable(door);
+
+    // Place a lever in room 1 and pass the door that it should unlock
+    Lever* lever = new Lever();
+    room1->addInteractable(lever);
 
     // Assign the rooms to the game manager's room map.
     rooms[0] = room1;

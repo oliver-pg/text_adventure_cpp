@@ -11,6 +11,12 @@ void Lever::interact(Door* door) {
     std::cout << "You pull the lever. You hear a click in the distance..."
               << std::endl;
 
+    // Check if the door exists before trying to interact with it.
+    if (door == nullptr) {
+        std::cout << "There is no door connected to this lever." << std::endl;
+        return; // Avoid further interaction if there's no door.
+    }
+
     // The lever unlocks the door, just as a key unlocks possibilities.
     if (door->isLockedState()) {
         door->unlock();
