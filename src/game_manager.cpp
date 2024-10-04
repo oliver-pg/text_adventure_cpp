@@ -2,6 +2,26 @@
 #include "../include/door.h"
 #include "../include/lever.h"
 
+// Constructor - this is where we gently set the stage for our player's journey.
+// In life, as in code, everything starts with intention, and here we name our
+// player, preparing them to explore the world.
+GameManager::GameManager(std::string playerName) : player(playerName) {
+    // There may be times when additional preparation is necessary, but for now,
+    // we breathe and trust the simplicity of this setup.
+}
+
+// Destructor - when the time comes to part ways with our game, we must clear up
+// what we’ve created. Just like in life, we practice letting go, releasing
+// memory we've held onto, to leave things in balance.
+GameManager::~GameManager() {
+    // We carefully release each room we created, acknowledging the role it
+    // played in the journey. With every delete, we return memory to where it
+    // came from, knowing that nothing truly lasts forever.
+    for (auto& room : rooms) {
+        delete room.second;
+    }
+}
+
 // Initializes the game, setting up the rooms, exits, and interactable objects.
 // This is like building the world before the player starts their journey.
 void GameManager::initGame() {

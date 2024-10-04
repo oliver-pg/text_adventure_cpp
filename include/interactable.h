@@ -9,7 +9,7 @@ class Interactable {
   public:
     // A virtual destructor - just in case any derived classes need proper
     // clean-up.
-    virtual ~Interactable() {}
+    virtual ~Interactable();
 
     // The core of all interaction - but we leave the specifics to the derived
     // classes. Think of this like an invitation to act, a call to engage with
