@@ -1,6 +1,8 @@
 #ifndef LEVER_H
 #define LEVER_H
 
+class Door;
+
 #include "door.h"
 #include "interactable.h"
 #include <iostream>
@@ -18,27 +20,7 @@ class Lever : public Interactable {
     // The act of pulling the lever - once pulled, it doesn't change back.
     // A reminder that actions often have irreversible consequences, even in
     // small things.
-    void interact(Door* door) {
-        if (!isPulled) {
-            std::cout << "You pull the lever. You hear a mechanism activate."
-                      << std::endl;
-            isPulled = true;
-
-            // If the door is locked, the lever unlocks it.
-            if (door->isLockedState()) {
-                door->unlock();
-                std::cout
-                    << "You hear the door unlocking. A path forward opens."
-                    << std::endl;
-            } else {
-                std::cout << "The door was already unlocked. The lever has no "
-                             "further effect."
-                          << std::endl;
-            }
-        } else {
-            std::cout << "The lever has already been pulled." << std::endl;
-        }
-    }
+    void interact(Door* door);
 
     // Just checking if the lever has been pulled, like looking back at a past
     // decision.
