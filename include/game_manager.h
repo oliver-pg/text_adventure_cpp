@@ -14,7 +14,7 @@
 class GameManager {
     Player player; // Our adventurer, the main protagonist
     std::map<int, Room*>
-        rooms{}; // A collection of all rooms, connected in ways unknown
+        rooms; // A collection of all rooms, connected in ways unknown
 
   public:
     GameManager(

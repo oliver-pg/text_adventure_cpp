@@ -42,8 +42,8 @@ void Room::interactWithObject(const std::string& objectName) const {
         // Checking if it's the lever - the player might be ready to engage.
         if (Lever* lever = dynamic_cast<Lever*>(obj)) {
             if (objectName == "lever") {
-                lever->interact(
-                    door); // Pass the door to the lever's interact function
+                lever->interact(door); // Pass the door to the lever's interact
+                                       // function
                 return;
             }
             // Checking for a door - maybe it's time to open the way forward.
