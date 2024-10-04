@@ -43,30 +43,7 @@ class Room {
 
     // Allows the player to interact with everything in the room.
     // Engage with the world and see what actions come from it.
-
-    void interactWithObject(const std::string& objectName) const {
-        // Each object in the room waits for attention, an invitation to act.
-        for (const auto& obj : interactables) {
-            // Checking if it's the lever - the player might be ready to engage.
-            if (Lever* lever = dynamic_cast<Lever*>(obj)) {
-                if (objectName == "lever") {
-                    lever->interact();
-                    return; // Once the lever is pulled, the interaction is
-                            // complete.
-                }
-                // Checking for a door - maybe it's time to open the way
-                // forward.
-            } else if (Door* door = dynamic_cast<Door*>(obj)) {
-                if (objectName == "door") {
-                    door->interact();
-                    return;
-                }
-            }
-        }
-        // If the object isn't found, we remind the player to look closer.
-        std::cout << "There's nothing like that here to interact with."
-                  << std::endl;
-    };
+    void interactWithObject(const std::string& objectName) const;
 };
 
 #endif // ROOM_H
