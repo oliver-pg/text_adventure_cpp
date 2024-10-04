@@ -51,35 +51,35 @@ void GameManager::initGame() {
 // The game loop - this is where the player begins interacting with the world.
 // The loop runs until the player decides to end the game.
 void GameManager::startGame() {
-    std::string command; // A place to store the player's input.
+    std::string command,
+        object; // We listen for both the action and the target object.
 
     // Show the player's current status (where they are, inventory, etc.)
     player.displayStatus();
 
-    // The main loop where the player interacts with the game world.
+    // The main loop - the player navigates the world, one moment at a time.
     while (true) {
-        // Describe the current room to the player - they need to understand
-        // their environment.
-        rooms[player.getCurrentRoomId()]->describe();
-        std::cout << "> "; // Command prompt
+        rooms[player.getCurrentRoomId()]
+            ->describe();  // Describe the player's surroundings.
+        std::cout << "> "; // A quiet invitation for the player to act.
         std::cin >> command;
 
         if (command == "move") {
-            std::string direction; // Which way the player wants to go
+            std::string direction;
             std::cin >> direction;
-
-            // Check if the player can move in the chosen direction
             int nextRoomId =
                 rooms[player.getCurrentRoomId()]->getExit(direction);
             if (nextRoomId != -1) {
-                player.move(nextRoomId); // Move the player if the exit is valid
+                player.move(
+                    nextRoomId); // Movement, the simplest form of progress.
             } else {
                 std::cout << "You can't go that way!" << std::endl;
             }
         } else if (command == "interact") {
-            // If the player chooses to interact, engage with the objects in the
-            // room.
-            rooms[player.getCurrentRoomId()]->interactWithObjects();
+            std::cin >> object; // A moment of curiosity - the player reaches
+                                // out to interact.
+            rooms[player.getCurrentRoomId()]->interactWithObject(
+                object); // Interact with something specific.
         }
     }
 }
