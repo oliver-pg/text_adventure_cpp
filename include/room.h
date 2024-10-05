@@ -4,6 +4,7 @@
 #include "door.h"
 #include "interactable.h"
 #include "lever.h"
+#include "player.h"
 #include <iostream>
 #include <map>
 #include <string>
@@ -23,6 +24,8 @@ class Room {
     // The room starts with a description - a small detail about where you are,
     // right now.
     Room(std::string desc);
+
+    void movePlayer(const std::string& direction, Player& player);
 
     // Adds an exit - a direction to move forward, and the next room it leads
     // to. Think of it as laying out the map of your journey.

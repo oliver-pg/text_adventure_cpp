@@ -1,4 +1,5 @@
 #include "../include/room.h"
+#include "../include/player.h"
 #include <iostream>
 
 // The room is created with a description. Each room, like each moment in life,
