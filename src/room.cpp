@@ -55,11 +55,13 @@ void Room::movePlayer(const std::string& direction, Player& player) {
     // out.
     if (doorLocked) {
         std::cout << "The door is locked. You can't go through." << std::endl;
-    } else {
-        // The way forward is clear; let's move forward.
-        player.move(nextRoomId);
-        std::cout << "You moved to room " << nextRoomId << std::endl;
+        return;
     }
+
+    // The way is clear; let's move forward.
+    player.move(nextRoomId);
+    std::cout << player.getName() << " moved to room " << nextRoomId
+              << std::endl;
 }
 
 // Allows the player to interact with everything in the room.

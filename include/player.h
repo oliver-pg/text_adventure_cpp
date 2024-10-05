@@ -17,7 +17,10 @@ class Player {
   public:
     Player(std::string playerName); // Constructor to name our adventurer and
                                     // set their starting point
-    void move(int newRoomId);       // Moves the player from one room to another
+
+    std::string getName() const { return name; }
+
+    void move(int newRoomId); // Moves the player from one room to another
     void addItem(const std::string& item); // Adds an item to the player's
                                            // inventory, simple treasures
     void
