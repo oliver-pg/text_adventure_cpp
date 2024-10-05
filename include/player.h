@@ -13,7 +13,7 @@ class Player {
   private:
     std::string name{};  // The name of the player, unique to each journey
     int currentRoomId{}; // Tracks the room the player is currently in
-    std::vector<std::string>
+    std::vector<Item>
         inventory{}; // A collection of items the player gathers along the way
 
   public:
@@ -22,15 +22,14 @@ class Player {
 
     std::string getName() const { return name; }
 
-    void move(int newRoomId); // Moves the player from one room to another
-    void addItem(const std::string& item); // Adds an item to the player's
-                                           // inventory, simple treasures
+    void move(int newRoomId);       // Moves the player from one room to another
+    void addItem(const Item& item); // Adds an item to the player's
+                                    // inventory, simple treasures
     void
     displayStatus() const; // Shows the player's current status and possessions
 
     int getCurrentRoomId() const; // Retrieves the ID of the room the player is
                                   // in, staying aware of the present moment
-    void addItem(const Item& item);
 
     void removeItem(const std::string& itemName);
 

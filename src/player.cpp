@@ -16,9 +16,9 @@ void Player::move(int newRoomId) {
 }
 
 // Adds an item to the player's inventory, a simple action of gathering
-void Player::addItem(const std::string& item) {
+void Player::addItem(const Item& item) {
     inventory.push_back(item);
-    std::cout << item << " added to inventory."
+    std::cout << item.getName() << " added to inventory."
               << std::endl; // Acknowledging the gain of a new possession
 }
 
@@ -28,7 +28,7 @@ void Player::displayStatus() const {
               << std::endl;
     std::cout << "Inventory: ";
     for (const auto& item : inventory) {
-        std::cout << item << " ";
+        std::cout << item.getName() << " ";
     }
     std::cout << std::endl;
 }
