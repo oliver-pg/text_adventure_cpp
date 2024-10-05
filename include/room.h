@@ -59,7 +59,7 @@ class Room {
 
     void addItem(const Item& item);
     void listItems() const;
-    bool pickupItem(const std::string& itemName, Player& player);
+    bool pickUpItem(const std::string& itemName, Player* player);
 };
 
 #endif // ROOM_H
