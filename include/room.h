@@ -41,6 +41,10 @@ class Room {
     // Like placing a lever or a door in the room, something to engage with.
     void addInteractable(Interactable* obj) { interactables.push_back(obj); }
 
+    const std::vector<Interactable*>& getInteractables() const {
+        return interactables;
+    }
+
     // Allows the player to interact with everything in the room.
     // Engage with the world and see what actions come from it.
     void interactWithObject(const std::string& objectName) const;

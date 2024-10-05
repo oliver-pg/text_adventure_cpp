@@ -65,13 +65,32 @@ void GameManager::startGame() {
         std::cin >> command;
 
         if (command == "move") {
-            std::string direction;
+            std::string direction{};
             std::cin >> direction;
+
             int nextRoomId =
                 rooms[player.getCurrentRoomId()]->getExit(direction);
+
             if (nextRoomId != -1) {
-                player.move(
-                    nextRoomId); // Movement, the simplest form of progress.
+                // Iterate through the interactables in the current room to find
+                // a Door
+                bool doorLocked = false;
+                for (Interactable* interactable :
+                     rooms[player.getCurrentRoomId()]->getInteractables()) {
+                    Door* door = dynamic_cast<Door*>(interactable);
+                    if (door && door->isLockedState()) {
+                        doorLocked = true;
+                        break;
+                    }
+                }
+
+                if (doorLocked) {
+                    std::cout << "The door is locked. You can't go through."
+                              << std::endl;
+                } else {
+                    player.move(
+                        nextRoomId); // Movement, the simplest form of progress.
+                }
             } else {
                 std::cout << "You can't go that way!" << std::endl;
             }
