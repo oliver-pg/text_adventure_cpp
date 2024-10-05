@@ -50,6 +50,7 @@ void GameManager::initGame() {
 // The game loop - this is where the player begins interacting with the world.
 // The loop runs until the player decides to end the game.
 void GameManager::startGame() {
+    player.displayStatus();
     // The main loop - the player navigates the world, one moment at a time.
     while (true) {
         rooms[player.getCurrentRoomId()]
