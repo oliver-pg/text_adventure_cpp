@@ -25,6 +25,42 @@ int Room::getExit(const std::string& direction) const {
 // right now.
 void Room::describe() const { std::cout << description << std::endl; }
 
+void Room::movePlayer(const std::string& direction, Player& player) {
+    // We all want to move forward in life, but sometimes doors block the way.
+    int nextRoomId =
+        getExit(direction); // Check if there's a way to go in that direction.
+
+    // No exit in this direction, let's not push too hard.
+    if (nextRoomId == -1) {
+        std::cout << "You can't go that way!" << std::endl;
+        return;
+    }
+
+    // Now, let's make sure the path is truly clear.
+    bool doorLocked = false;
+
+    // Check if any doors are guarding this exit and whether they are locked.
+    for (const auto& interactable : interactables) {
+        // We're looking for doors specifically.
+        Door* door = dynamic_cast<Door*>(interactable);
+        if (door && door->isLockedState()) {
+            // If the door is locked, we cannot move forward.
+            doorLocked = true;
+            break;
+        }
+    }
+
+    // If the door is locked, we have to pause our progress and figure things
+    // out.
+    if (doorLocked) {
+        std::cout << "The door is locked. You can't go through." << std::endl;
+    } else {
+        // The way forward is clear; let's move forward.
+        player.move(nextRoomId);
+        std::cout << "You moved to room " << nextRoomId << std::endl;
+    }
+}
+
 // Allows the player to interact with everything in the room.
 // Engage with the world and see what actions come from it.
 void Room::interactWithObject(const std::string& objectName) const {
