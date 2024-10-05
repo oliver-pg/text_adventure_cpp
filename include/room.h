@@ -3,6 +3,7 @@
 
 #include "door.h"
 #include "interactable.h"
+#include "item.h"
 #include "lever.h"
 #include "player.h"
 #include <iostream>
@@ -13,12 +14,16 @@
 // The Room class - each room is like a moment in life.
 // It holds its own challenges, its own opportunities, and ways to move forward.
 class Room {
+  private:
     std::string description{}; // A simple description to reflect what this room
                                // feels like.
     std::map<std::string, int>
         exits{}; // The paths out of the room - where you can go next.
+
     std::vector<Interactable*>
         interactables{}; // Objects in the room you can engage with.
+
+    std::vector<Item> itemsInRoom{};
 
   public:
     // The room starts with a description - a small detail about where you are,
@@ -51,6 +56,10 @@ class Room {
     // Allows the player to interact with everything in the room.
     // Engage with the world and see what actions come from it.
     void interactWithObject(const std::string& objectName) const;
+
+    void addItem(const Item& item);
+    void listItems() const;
+    bool pickupItem(const std::string& itemName, Player& player);
 };
 
 #endif // ROOM_H

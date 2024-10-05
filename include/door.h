@@ -7,7 +7,7 @@
 // The Door class - it's a symbol of transitions, opportunities, or barriers.
 // Locked at first, but unlock it, and you can move forward.
 class Door : public Interactable {
-    bool isLocked; // A simple state of being - locked or unlocked.
+    bool isLocked{}; // A simple state of being - locked or unlocked.
 
   public:
     // Constructor - by default, doors are locked. Like some of life's paths,

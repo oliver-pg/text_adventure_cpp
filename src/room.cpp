@@ -1,5 +1,6 @@
 #include "../include/room.h"
 #include "../include/player.h"
+#include <algorithm>
 #include <iostream>
 
 // The room is created with a description. Each room, like each moment in life,
@@ -97,4 +98,36 @@ void Room::interactWithObject(const std::string& objectName) const {
     // If the object isn't found, we remind the player to look closer.
     std::cout << "There's nothing like that here to interact with."
               << std::endl;
+}
+
+void Room::addItem(const Item& item) { itemsInRoom.push_back(item); }
+
+void Room::listItems() const {
+    if (itemsInRoom.empty()) {
+        std::cout << "There are no items in this room." << std::endl;
+    } else {
+        std::cout << "There are no items in this room." << std::endl;
+
+        std::cout << "you see the following items in the room:" << std::endl;
+        for (const auto& item : itemsInRoom) {
+            std::cout << "- " << item.getName() << ": " << item.getDescription()
+                      << std::endl;
+        }
+    }
+}
+
+bool Room::pickUpItem(const std::string& itemName, Player* player) {
+    auto it = std::find_if(
+        itemsInRoom.begin(), itemsInRoom.end(),
+        [&itemName](const Item& item) { return item.getName() == itemName; });
+
+    if (it != itemsInRoom.end()) {
+        player->addItem(*it);
+        itemsInRoom.erase(it);
+        return true;
+    } else {
+        std::cout << "There is no item named " << itemName << " in this room."
+                  << std::endl;
+        return false;
+    }
 }

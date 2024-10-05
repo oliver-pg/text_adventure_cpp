@@ -2,6 +2,7 @@
 // Moving, picking up items, and reflecting on their journey
 
 #include "../include/player.h"
+#include <algorithm>
 #include <iostream>
 
 // Constructor: We name the player and set their starting room
@@ -35,4 +36,47 @@ void Player::displayStatus() const {
 // Returns the ID of the room the player is currently in
 int Player::getCurrentRoomId() const {
     return currentRoomId; // Always knowing where you are in the present
+}
+
+void Player::removeItem(const std::string& itemName) {
+    auto it = std::remove_if(
+        inventory.begin(), inventory.end(),
+        [&itemName](const Item& item) { return item.getName() == itemName; });
+    if (it != inventory.end()) {
+        inventory.erase(it);
+        std::cout << "You have removed " << itemName << " from your inventory."
+                  << std::endl;
+    } else {
+        std::cout << "You don't have " << itemName << "." << std::endl;
+    }
+}
+
+void Player::listInventory() const {
+    if (inventory.empty()) {
+        std::cout << "Your inventory is empty." << std::endl;
+    } else {
+        std::cout << "Your inventory contains:" << std::endl;
+        for (const auto& item : inventory) {
+            std::cout << "- " << item.getName() << ": " << item.getDescription()
+                      << std::endl;
+        }
+    }
+}
+
+bool Player::hasItem(const std::string& itemName) const {
+    return std::any_of(
+        inventory.begin(), inventory.end(),
+        [&itemName](const Item& item) { return item.getName() == itemName; });
+}
+
+void Player::useItem(const std::string& itemName) {
+    auto it = std::find_if(
+        inventory.begin(), inventory.end(),
+        [&itemName](const Item& item) { return item.getName() == itemName; });
+    if (it != inventory.end()) {
+        it->use();
+    } else {
+        std::cout << "You don't have " << itemName << " in your inventory."
+                  << std::endl;
+    }
 }
