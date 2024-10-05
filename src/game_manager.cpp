@@ -1,6 +1,7 @@
 #include "../include/game_manager.h"
 #include "../include/door.h"
 #include "../include/lever.h"
+#include <sstream>
 
 // Constructor - this is where we gently set the stage for our player's journey.
 // In life, as in code, everything starts with intention, and here we name our
@@ -49,56 +50,70 @@ void GameManager::initGame() {
 // The game loop - this is where the player begins interacting with the world.
 // The loop runs until the player decides to end the game.
 void GameManager::startGame() {
-    // We listen for both the action and the target object.
-    std::string command{};
-    std::string object{};
-
-    // Show the player's current status (where they are, inventory, etc.)
-    player.displayStatus();
-
     // The main loop - the player navigates the world, one moment at a time.
     while (true) {
         rooms[player.getCurrentRoomId()]
             ->describe();  // Describe the player's surroundings.
         std::cout << "> "; // A quiet invitation for the player to act.
-        std::cin >> command;
+
+        std::string inputLine{};
+        std::getline(std::cin, inputLine); // Read the entire line of input
+
+        std::istringstream inputStream(inputLine);
+        std::string command{};
+        inputStream >> command;
 
         if (command == "move") {
             std::string direction{};
-            std::cin >> direction;
+            inputStream >> direction;
 
-            int nextRoomId =
-                rooms[player.getCurrentRoomId()]->getExit(direction);
+            // The player chooses a direction to move in the current room.
+            if (!direction.empty()) {
+                int nextRoomId =
+                    rooms[player.getCurrentRoomId()]->getExit(direction);
 
-            if (nextRoomId != -1) {
-                // Iterate through the interactables in the current room to find
-                // a Door
-                bool doorLocked = false;
-                for (Interactable* interactable :
-                     rooms[player.getCurrentRoomId()]->getInteractables()) {
-                    Door* door = dynamic_cast<Door*>(interactable);
-                    if (door && door->isLockedState()) {
-                        doorLocked = true;
-                        break;
+                // Check if there is an exit in the specified direction.
+                if (nextRoomId != -1) {
+                    // Iterate through the interactables in the current room to
+                    // find a Door
+                    bool doorLocked = false;
+                    for (Interactable* interactable :
+                         rooms[player.getCurrentRoomId()]->getInteractables()) {
+                        Door* door = dynamic_cast<Door*>(interactable);
+                        if (door && door->isLockedState()) {
+                            doorLocked = true;
+                            break;
+                        }
                     }
-                }
-                // If the door is locked, we gently remind the player that some
-                // paths require patience.
-                if (doorLocked) {
-                    std::cout << "The door is locked. You can't go through."
-                              << std::endl;
+                    // If the door is locked, remind the player
+                    if (doorLocked) {
+                        std::cout << "The door is locked. You can't go through."
+                                  << std::endl;
+                    } else {
+                        player.move(nextRoomId); // Movement, the simplest form
+                                                 // of progress.
+                    }
                 } else {
-                    player.move(
-                        nextRoomId); // Movement, the simplest form of progress.
+                    std::cout << "You can't go that way!" << std::endl;
                 }
             } else {
-                std::cout << "You can't go that way!" << std::endl;
+                std::cout << "Please specify a direction." << std::endl;
             }
         } else if (command == "interact") {
-            std::cin >> object; // A moment of curiosity - the player reaches
-                                // out to interact.
-            rooms[player.getCurrentRoomId()]->interactWithObject(
-                object); // Interact with something specific.
+            std::string object{};
+            inputStream >> object;
+
+            // The player reaches out to interact with an object in the room.
+            if (!object.empty()) {
+                rooms[player.getCurrentRoomId()]->interactWithObject(
+                    object); // Interact with something specific.
+            } else {
+                std::cout << "Please specify an object to interact with."
+                          << std::endl;
+            }
+        } else {
+            std::cout << "Unknown command."
+                      << std::endl; // Remind the player to use known commands.
         }
     }
 }
