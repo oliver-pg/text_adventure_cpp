@@ -4,7 +4,7 @@
 
 // The room is created with a description. Each room, like each moment in life,
 // starts with a story.
-Room::Room(std::string desc) : description(desc) {}
+Room::Room(std::string desc) : description(std::move(desc)) {}
 
 // Adding an exit gives you a path forward - a chance to move from this room to
 // the next.
@@ -26,6 +26,7 @@ int Room::getExit(const std::string& direction) const {
 // right now.
 void Room::describe() const { std::cout << description << std::endl; }
 
+// Move the player - but first, we check if there's a door blocking the way.
 void Room::movePlayer(const std::string& direction, Player& player) {
     // We all want to move forward in life, but sometimes doors block the way.
     int nextRoomId =

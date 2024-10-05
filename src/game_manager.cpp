@@ -25,34 +25,33 @@ GameManager::~GameManager() {
 // Initializes the game, setting up the rooms, exits, and interactable objects.
 // This is like building the world before the player starts their journey.
 void GameManager::initGame() {
-    // Create two rooms
-    Room* room1 = new Room("You are in a small, dimly lit room with a lever.");
-    Room* room2 =
+    // The first room - a small, dimly lit room with a lever.
+    Room* room0 = new Room("You are in a small, dimly lit room with a lever.");
+    Door* door0 =
+        new Door(); // A locked door stands here, waiting to be unlocked.
+    Lever* lever0 = new Lever(door0); // This lever is connected to the door.
+    room0->addInteractable(lever0);
+    room0->addInteractable(door0);
+    room0->addExit(
+        "north",
+        1); // The path ahead leads north, but the door must be opened first.
+
+    // The second room - a large hall.
+    Room* room1 =
         new Room("You are in a large hall with a locked door to the north.");
+    room1->addExit("south", 0); // A way back, through the locked door.
 
-    // Add exits - room 1 leads north to room 2, and room 2 leads back south to
-    // room 1.
-    room1->addExit("north", 1);
-    room2->addExit("south", 0);
-
-    // Place a door in room 2
-    Door* door = new Door();
-    room2->addInteractable(door);
-
-    // Place a lever in room 1 and pass the door that it should unlock
-    Lever* lever = new Lever(door);
-    room1->addInteractable(lever);
-
-    // Assign the rooms to the game manager's room map.
-    rooms[0] = room1;
-    rooms[1] = room2;
+    // We add the rooms to the game world.
+    rooms[0] = room0;
+    rooms[1] = room1;
 }
 
 // The game loop - this is where the player begins interacting with the world.
 // The loop runs until the player decides to end the game.
 void GameManager::startGame() {
-    std::string command,
-        object; // We listen for both the action and the target object.
+    // We listen for both the action and the target object.
+    std::string command{};
+    std::string object{};
 
     // Show the player's current status (where they are, inventory, etc.)
     player.displayStatus();
@@ -83,7 +82,8 @@ void GameManager::startGame() {
                         break;
                     }
                 }
-
+                // If the door is locked, we gently remind the player that some
+                // paths require patience.
                 if (doorLocked) {
                     std::cout << "The door is locked. You can't go through."
                               << std::endl;
