@@ -2,24 +2,31 @@
 #include "../include/door.h"
 #include <iostream>
 
-// The lever class represents a decision point in life.
-// You pull it, and things change—sometimes in ways you don't expect.
+// Constructor - this lever starts unpulled, but now it also has a door to
+// affect.
+Lever::Lever(Door* door) : isPulled(false), connectedDoor(door) {}
 
-// When the player interacts with the lever, the state of the world shifts.
-// Perhaps something has been unlocked, a path forward revealed.
+// Override interact() method from Interactable
+void Lever::interact() {
+    interact(nullptr); // Delegate to the door-specific interact method
+}
+
+// The act of pulling the lever. Now it tries to interact with its door.
 void Lever::interact(Door* door) {
     std::cout << "You pull the lever. You hear a click in the distance..."
               << std::endl;
 
+    Door* doorToInteract = door ? door : connectedDoor;
+
     // Check if the door exists before trying to interact with it.
-    if (door == nullptr) {
+    if (doorToInteract == nullptr) {
         std::cout << "There is no door connected to this lever." << std::endl;
-        return; // Avoid further interaction if there's no door.
+        return;
     }
 
     // The lever unlocks the door, just as a key unlocks possibilities.
-    if (door->isLockedState()) {
-        door->unlock();
+    if (doorToInteract->isLockedState()) {
+        doorToInteract->unlock();
         std::cout << "The door has been unlocked. A way forward is now open."
                   << std::endl;
     } else {

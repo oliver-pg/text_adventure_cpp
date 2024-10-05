@@ -17,34 +17,13 @@ class Lever : public Interactable {
   public:
     // Constructor - this lever starts unpulled, but now it also has a door to
     // affect.
-    Lever(Door* door) : isPulled(false), connectedDoor(door) {}
+    Lever(Door* door);
+
+    // Override the interact method from the base class
+    void interact() override;
 
     // The act of pulling the lever. Now it tries to interact with its door.
-    void interact(Door* door = nullptr) {
-        std::cout << "You pull the lever. You hear a click in the distance..."
-                  << std::endl;
-
-        Door* doorToInteract = door ? door : connectedDoor;
-
-        // Check if the door exists before trying to interact with it.
-        if (doorToInteract == nullptr) {
-            std::cout << "There is no door connected to this lever."
-                      << std::endl;
-            return;
-        }
-
-        // The lever unlocks the door, just as a key unlocks possibilities.
-        if (doorToInteract->isLockedState()) {
-            doorToInteract->unlock();
-            std::cout
-                << "The door has been unlocked. A way forward is now open."
-                << std::endl;
-        } else {
-            std::cout << "The lever seems to have no further effect. The door "
-                         "is already unlocked."
-                      << std::endl;
-        }
-    }
+    void interact(Door* door = nullptr);
 };
 
 #endif // LEVER_H
